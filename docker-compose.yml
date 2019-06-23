@@ -1,0 +1,14 @@
+version: '2'
+
+networks:
+  sudoku-network:
+    driver: bridge
+
+services:
+  app:
+    build: .
+    image: sudoku-service:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - sudoku-network
