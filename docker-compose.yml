@@ -1,14 +1,12 @@
-version: '2'
+version: '3'
 
 networks:
-  sudoku-network:
-    driver: bridge
+  default:
+    external:
+      name: sudoku-network
 
 services:
-  app:
+  sudoku-service:
     build: .
     image: sudoku-service:latest
-    ports:
-      - "8080:8080"
-    networks:
-      - sudoku-network
+    container_name: sudoku-service
