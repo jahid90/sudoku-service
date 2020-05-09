@@ -1,4 +1,4 @@
-FROM alpine-java:base
+FROM alpine-java:local
 
 COPY target/sudoku-service-0.0.1-SNAPSHOT.jar /usr/lib/app.jar
 

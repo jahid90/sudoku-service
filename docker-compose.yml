@@ -8,5 +8,5 @@ networks:
 services:
   sudoku-service:
     build: .
-    image: sudoku-service:latest
+    image: sudoku-service:local
     container_name: sudoku-service
