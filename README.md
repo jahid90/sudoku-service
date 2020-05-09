@@ -1,5 +1,5 @@
 # sudoku-service
-A service to solve sudoku puzzle
+A service to solve sudoku puzzles
 
 ## Setup
 
@@ -10,12 +10,13 @@ Running the `main` method in SudokuServiceApplication class starts a local serve
 To deploy in a docker container
 
 ```bash
-$ ./bin/build-base-docker-image.sh
-$ ./bin/build-app-jar.sh
-$ sudo docker-compose up -d
+$ ./scripts/build-base-docker-image.sh
+$ ./scripts/build-app-jar.sh
+$ ./scripts/build.sh
+$ docker-compose up -d
 ```
 
 To stop the container
 ```bash
-sudo docker-compose down
+$ docker-compose down
 ```
