@@ -3,6 +3,7 @@ package org.jahiduls.sudokuservice.dao;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -90,6 +91,19 @@ public class Sequence {
 
         return true;
 
+    }
+
+    public Set<Integer> getAllValues() {
+        return cells.stream().map(Cell::getValue).collect(Collectors.toSet());
+    }
+
+    public Set<Integer> getCandidateValues() {
+        final Set<Integer> existingValues = getAllValues();
+
+        return IntStream.range(1, 10)
+                .boxed()
+                .filter(i -> !existingValues.contains(i))
+                .collect(Collectors.toSet());
     }
 
     @Override

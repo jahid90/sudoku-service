@@ -18,7 +18,7 @@ public class Cell {
     public static final Cell NINE = Cell.builder().value(9).build();
 
     @Getter
-    private final int value;
+    private final Integer value;
 
     public static Cell of(int value) {
         switch (value) {

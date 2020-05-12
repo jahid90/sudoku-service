@@ -1,6 +1,8 @@
 package org.jahiduls.sudokuservice.dao;
 
+import java.util.Deque;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -103,6 +105,48 @@ public class Puzzle {
         /* For the puzzle to be valid, all rows, columns and blocks must be valid */
         return rows.stream().allMatch(Sequence::isValid) && columns.stream().allMatch(Sequence::isValid)
                 && blocks.stream().allMatch(Block::isValid);
+    }
+
+    public Set<Integer> getAllValuesInRow(int x, int y) {
+        int rowIndex = xyToRowIndex(x, y);
+        Sequence row = rows.get(rowIndex);
+
+        return row.getAllValues();
+    }
+
+    public Set<Integer> getCandidateValuesInRow(int x, int y) {
+        int rowIndex = xyToRowIndex(x, y);
+        Sequence row = rows.get(rowIndex);
+
+        return row.getCandidateValues();
+    }
+
+    public Set<Integer> getAllValuesInColumn(int x, int y) {
+        int columnIndex = xyToColumnIndex(x, y);
+        Sequence column = columns.get(columnIndex);
+
+        return column.getAllValues();
+    }
+
+    public Set<Integer> getCandidateValuesInColumn(int x, int y) {
+        int columnIndex = xyToColumnIndex(x, y);
+        Sequence column = columns.get(columnIndex);
+
+        return column.getCandidateValues();
+    }
+
+    public Set<Integer> getAllValuesInBlock(int x, int y) {
+        int blockIndex = xyToBlockIndex(x, y);
+        Block block = blocks.get(blockIndex);
+
+        return block.getAllValues();
+    }
+
+    public Set<Integer> getCandidateValuesInBlock(int x, int y) {
+        int blockIndex = xyToBlockIndex(x, y);
+        Block block = blocks.get(blockIndex);
+
+        return block.getCandidateValues();
     }
 
     @Override
