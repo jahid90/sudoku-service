@@ -1,6 +1,5 @@
 package org.jahiduls.sudokuservice.dao;
 
-import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,6 +46,11 @@ public class Puzzle {
     public Puzzle() {
 
         matrix = new Cell[puzzleSize()][puzzleSize()];
+        for (int i = 0; i < puzzleSize(); i++) {
+            for (int j = 0; j < puzzleSize(); j++) {
+                matrix[i][j] = Cell.BLANK;
+            }
+        }
 
         rows = IntStream.range(0, puzzleSize())
                 .mapToObj(i -> new Sequence())
@@ -183,9 +187,5 @@ public class Puzzle {
         sb.append(blockRowSeparator).append("\n");
 
         return sb.toString();
-    }
-
-    private int getRow(int x, int y) {
-        return -1;
     }
 }
