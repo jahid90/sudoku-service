@@ -24,9 +24,12 @@ public class SudokuService {
 
         Puzzle parsedPuzzle = parser.parse(puzzle);
 
-        log.info("Parsed puzzle: \n{}", parsedPuzzle);
+        log.info("Puzzle parsed");
+        log.debug("\n{}", parsedPuzzle);
 
         validator.validate(parsedPuzzle);
+
+        log.info("Puzzle validated.");
 
         return "solved!";
     }

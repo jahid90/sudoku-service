@@ -1,7 +1,5 @@
 package org.jahiduls.sudokuservice.dao;
 
-import io.micrometer.core.instrument.util.JsonUtils;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -59,6 +57,22 @@ public class Puzzle {
         blocks = IntStream.range(0, puzzleSize())
                 .mapToObj(i -> new Block())
                 .collect(Collectors.toList());
+    }
+
+    public static Puzzle from(Puzzle puzzle) {
+        Puzzle copyPuzzle = new Puzzle();
+
+        for (int i = 0; i < puzzleSize(); i++) {
+            for (int j = 0; j < puzzleSize(); j++) {
+                copyPuzzle.setCellAt(i, j, puzzle.getCellAt(i, j));
+            }
+        }
+
+        return copyPuzzle;
+    }
+
+    public Cell getCellAt(int x, int y) {
+        return matrix[x][y];
     }
 
     public void setCellAt(int x, int y, Cell cell) {
