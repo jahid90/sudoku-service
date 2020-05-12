@@ -14,6 +14,7 @@ public class SudokuService {
 
     private final SudokuParser parser;
     private final SudokuValidator validator;
+    private final SudokuSolver solver;
 
     /**
      * Solves a sudoku puzzle
