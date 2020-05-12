@@ -4,7 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.jahiduls.sudokuservice.dao.Cell;
 import org.jahiduls.sudokuservice.dao.Puzzle;
 import org.jahiduls.sudokuservice.exceptions.InvalidFormatException;
-import org.jahiduls.sudokuservice.resource.PuzzleInput;
+import org.jahiduls.sudokuservice.resource.PuzzleResource;
 import org.springframework.stereotype.Component;
 
 import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.puzzleSize;
@@ -13,7 +13,7 @@ import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.puzzleSi
 @Component
 public class SudokuParser {
 
-    public Puzzle parse(PuzzleInput puzzle) throws InvalidFormatException {
+    public Puzzle parse(PuzzleResource puzzle) throws InvalidFormatException {
 
         validateLength(puzzle);
         validateValues(puzzle);
@@ -23,7 +23,7 @@ public class SudokuParser {
         return generatePuzzle(values);
     }
 
-    private void validateLength(PuzzleInput puzzle) throws InvalidFormatException {
+    private void validateLength(PuzzleResource puzzle) throws InvalidFormatException {
 
         final int expectedPuzzleLength = puzzleSize() * puzzleSize();
 
@@ -34,7 +34,7 @@ public class SudokuParser {
         }
     }
 
-    private void validateValues(PuzzleInput puzzle) throws InvalidFormatException {
+    private void validateValues(PuzzleResource puzzle) throws InvalidFormatException {
 
         for (int i = 0; i < puzzle.getPuzzle().length(); i++) {
             char currentValue = puzzle.getPuzzle().charAt(i);
@@ -51,7 +51,7 @@ public class SudokuParser {
         return currentValue >= '0' && currentValue <= '9';
     }
 
-    private int[] parseValuesAsInt(PuzzleInput puzzle) {
+    private int[] parseValuesAsInt(PuzzleResource puzzle) {
 
         int[] values = new int[puzzle.getPuzzle().length()];
 

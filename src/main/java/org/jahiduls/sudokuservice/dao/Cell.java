@@ -1,9 +1,11 @@
 package org.jahiduls.sudokuservice.dao;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Builder
+@EqualsAndHashCode
 public class Cell {
 
     public static final Cell BLANK = Cell.builder().value(0).build();

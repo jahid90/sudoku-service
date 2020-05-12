@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.jahiduls.sudokuservice.dao.Puzzle;
 import org.jahiduls.sudokuservice.exceptions.InvalidFormatException;
-import org.jahiduls.sudokuservice.resource.PuzzleInput;
+import org.jahiduls.sudokuservice.exceptions.InvalidPuzzleException;
+import org.jahiduls.sudokuservice.resource.PuzzleResource;
 import org.springframework.stereotype.Service;
 
 @Log4j2
@@ -21,7 +22,7 @@ public class SudokuService {
      * @param puzzle The puzzle to solve
      * @return The solved puzzle
      */
-    public String solve(PuzzleInput puzzle) throws InvalidFormatException {
+    public Puzzle solve(PuzzleResource puzzle) throws InvalidFormatException, InvalidPuzzleException {
 
         Puzzle parsedPuzzle = parser.parse(puzzle);
 
@@ -32,7 +33,7 @@ public class SudokuService {
 
         log.info("Puzzle validated.");
 
-        return "solved!";
+        return solver.solve(parsedPuzzle);
     }
 
 }
