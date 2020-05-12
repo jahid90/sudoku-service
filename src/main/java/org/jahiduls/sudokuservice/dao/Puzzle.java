@@ -1,5 +1,7 @@
 package org.jahiduls.sudokuservice.dao;
 
+import io.micrometer.core.instrument.util.JsonUtils;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -92,16 +94,20 @@ public class Puzzle {
     @Override
     public String toString() {
 
-        final String blockRowSeparator = "---------------------";
+        final String blockRowSeparator = "-------------------------";
         final String blockColumnSeparator = "|";
 
         final StringBuilder sb = new StringBuilder();
+
+        sb.append(blockRowSeparator).append("\n");
 
         for (int i = 0; i < puzzleSize(); i++) {
 
             if (i > 0 && i % puzzleBlockSize() == 0) {
                 sb.append(blockRowSeparator).append("\n");
             }
+
+            sb.append(blockColumnSeparator).append(" ");
 
             for (int j = 0; j < puzzleSize(); j++) {
 
@@ -112,8 +118,11 @@ public class Puzzle {
                 sb.append(matrix[i][j].getValue()).append(" ");
             }
 
+            sb.append(blockColumnSeparator);
             sb.append("\n");
         }
+
+        sb.append(blockRowSeparator).append("\n");
 
         return sb.toString();
     }
