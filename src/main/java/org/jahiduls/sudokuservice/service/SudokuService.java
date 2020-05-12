@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class SudokuService {
 
     private final SudokuParser parser;
+    private final SudokuValidator validator;
 
     /**
      * Solves a sudoku puzzle
@@ -23,7 +24,9 @@ public class SudokuService {
 
         Puzzle parsedPuzzle = parser.parse(puzzle);
 
-        log.info("Parsed puzzle: {}", parsedPuzzle);
+        log.info("Parsed puzzle: \n{}", parsedPuzzle);
+
+        validator.validate(parsedPuzzle);
 
         return "solved!";
     }
