@@ -26,4 +26,11 @@ public class PuzzleResource {
         return result;
     }
 
+    public static PuzzleResource fromString(String puzzle) {
+        final PuzzleResource result = new PuzzleResource();
+        result.puzzle = puzzle;
+
+        return result;
+    }
+
 }
