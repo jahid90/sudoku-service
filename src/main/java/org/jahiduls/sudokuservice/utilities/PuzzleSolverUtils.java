@@ -5,7 +5,7 @@ import org.jahiduls.sudokuservice.dao.Puzzle;
 
 import java.util.Set;
 
-import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.*;
+import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.puzzleSize;
 
 public final class PuzzleSolverUtils {
 
@@ -34,8 +34,8 @@ public final class PuzzleSolverUtils {
         }
 
         final Set<Integer> candidates = puzzle.getCandidateValuesInBlock(x, y);
-        candidates.removeAll(puzzle.getCandidateValuesInRow(x, y));
-        candidates.removeAll(puzzle.getCandidateValuesInColumn(x, y));
+        candidates.retainAll(puzzle.getCandidateValuesInRow(x, y));
+        candidates.retainAll(puzzle.getCandidateValuesInColumn(x, y));
 
         return candidates;
     }

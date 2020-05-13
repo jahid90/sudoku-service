@@ -4,6 +4,7 @@ import org.jahiduls.sudokuservice.dao.Puzzle;
 import org.jahiduls.sudokuservice.exceptions.InvalidFormatException;
 import org.jahiduls.sudokuservice.exceptions.InvalidPuzzleException;
 import org.jahiduls.sudokuservice.resource.PuzzleResource;
+import org.jahiduls.sudokuservice.resource.PuzzleResourceTest;
 import org.jahiduls.sudokuservice.service.SudokuService;
 import org.junit.Before;
 import org.junit.Rule;

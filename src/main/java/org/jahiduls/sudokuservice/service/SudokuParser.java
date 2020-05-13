@@ -68,8 +68,8 @@ public class SudokuParser {
         Puzzle result = new Puzzle();
 
         for (int i = 0; i < values.length; i++) {
-            int x = i / puzzleSize();
-            int y = i % puzzleSize();
+            int x = i % puzzleSize();
+            int y = i / puzzleSize();
 
             result.setCellAt(x, y, Cell.of(values[i]));
         }

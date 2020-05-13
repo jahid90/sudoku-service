@@ -33,14 +33,14 @@ public final class PuzzleIteratorUtils {
         int blockX = x / 3;
         int blockY = y / 3;
 
-        return puzzleBlockSize() * blockX + blockY;
+        return puzzleBlockSize() * blockY + blockX;
     }
 
     public static int xyToBlockCellIndex(int x, int y) {
         int blockX = x % 3;
         int blockY = y % 3;
 
-        return puzzleBlockSize() * blockX + blockY;
+        return puzzleBlockSize() * blockY + blockX;
     }
 
 }

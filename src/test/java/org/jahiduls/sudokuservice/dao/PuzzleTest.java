@@ -1,5 +1,7 @@
 package org.jahiduls.sudokuservice.dao;
 
+import org.jahiduls.sudokuservice.resource.PuzzleResource;
+import org.jahiduls.sudokuservice.service.SudokuParser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
