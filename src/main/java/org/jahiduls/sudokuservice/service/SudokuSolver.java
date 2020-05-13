@@ -19,6 +19,4 @@ public class SudokuSolver {
         return solution.getPuzzle();
     }
 
-
-
 }

@@ -163,21 +163,21 @@ public class Puzzle {
 
         sb.append(blockRowSeparator).append("\n");
 
-        for (int i = 0; i < puzzleSize(); i++) {
+        for (int y = 0; y < puzzleSize(); y++) {
 
-            if (i > 0 && i % puzzleBlockSize() == 0) {
+            if (y > 0 && y % puzzleBlockSize() == 0) {
                 sb.append(blockRowSeparator).append("\n");
             }
 
             sb.append(blockColumnSeparator).append(" ");
 
-            for (int j = 0; j < puzzleSize(); j++) {
+            for (int x = 0; x < puzzleSize(); x++) {
 
-                if (j > 0 && j % puzzleBlockSize() == 0) {
+                if (x > 0 && x % puzzleBlockSize() == 0) {
                     sb.append(blockColumnSeparator).append(" ");
                 }
 
-                sb.append(matrix[i][j].getValue()).append(" ");
+                sb.append(matrix[x][y].getValue()).append(" ");
             }
 
             sb.append(blockColumnSeparator);
