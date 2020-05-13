@@ -1,9 +1,17 @@
-FROM alpine-java:local
+# Build env
+FROM openjdk:14-alpine as build
 
-COPY target/sudoku-service-0.0.1-SNAPSHOT.jar /usr/lib/app.jar
+WORKDIR /usr/app
+
+COPY . .
+RUN ./mvnw package spring-boot:repackage
+
+# Production env
+FROM openjdk:14-alpine
+
+COPY --from=build /usr/app/target/*.jar /usr/lib/app.jar
 
 ENTRYPOINT ["/usr/bin/java"]
-
 CMD ["-jar", "/usr/lib/app.jar"]
 
 EXPOSE 8080
