@@ -10,6 +10,7 @@ RUN ./mvnw package spring-boot:repackage
 FROM openjdk:14-alpine
 
 COPY --from=build /usr/app/target/*.jar /usr/lib/app.jar
+RUN ln -s `which java` /usr/bin/java
 
 ENTRYPOINT ["/usr/bin/java"]
 CMD ["-jar", "/usr/lib/app.jar"]
