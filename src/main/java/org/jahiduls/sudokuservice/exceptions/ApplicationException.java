@@ -27,12 +27,14 @@ public class ApplicationException extends RuntimeException {
         private Throwable throwable;
 
         public ApplicationExceptionBuilder withMessage(String message) {
+
             this.message = message;
 
             return this;
         }
 
         public ApplicationExceptionBuilder withThrowable(Throwable throwable) {
+
             this.throwable = throwable;
 
             return this;

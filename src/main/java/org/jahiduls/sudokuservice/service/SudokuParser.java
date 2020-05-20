@@ -7,6 +7,8 @@ import org.jahiduls.sudokuservice.exceptions.InvalidFormatException;
 import org.jahiduls.sudokuservice.resource.PuzzleResource;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.IntStream;
+
 import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.puzzleSize;
 
 @Log4j2
@@ -18,7 +20,7 @@ public class SudokuParser {
         validateLength(puzzle);
         validateValues(puzzle);
 
-        int[] values = parseValuesAsInt(puzzle);
+        final int[] values = parseValuesAsInt(puzzle);
 
         return generatePuzzle(values);
     }
@@ -53,26 +55,28 @@ public class SudokuParser {
 
     private int[] parseValuesAsInt(PuzzleResource puzzle) {
 
-        int[] values = new int[puzzle.getPuzzle().length()];
+        final int[] values = new int[puzzle.getPuzzle().length()];
 
-        for (int i = 0; i < puzzle.getPuzzle().length(); i++) {
-            char currentValue = puzzle.getPuzzle().charAt(i);
-            values[i] = Character.getNumericValue(currentValue);
-        }
+        IntStream.range(0, puzzle.getPuzzle().length())
+                .forEach(i -> {
+                    final char currentValue = puzzle.getPuzzle().charAt(i);
+                    values[i] = Character.getNumericValue(currentValue);
+        });
 
         return values;
     }
 
     private Puzzle generatePuzzle(int[] values) {
 
-        Puzzle result = new Puzzle();
+        final Puzzle result = new Puzzle();
 
-        for (int i = 0; i < values.length; i++) {
-            int x = i % puzzleSize();
-            int y = i / puzzleSize();
+        IntStream.range(0, values.length)
+                .forEach(i -> {
+                    int x = i % puzzleSize();
+                    int y = i / puzzleSize();
 
-            result.setCellAt(x, y, Cell.of(values[i]));
-        }
+                    result.setCellAt(x, y, Cell.of(values[i]));
+        });
 
         return result;
     }

@@ -24,7 +24,7 @@ public class SudokuService {
      */
     public Puzzle solve(PuzzleResource puzzle) throws InvalidFormatException, InvalidPuzzleException {
 
-        Puzzle parsedPuzzle = parser.parse(puzzle);
+        final Puzzle parsedPuzzle = parser.parse(puzzle);
 
         log.info("Puzzle parsed");
         log.debug("\n{}", parsedPuzzle);

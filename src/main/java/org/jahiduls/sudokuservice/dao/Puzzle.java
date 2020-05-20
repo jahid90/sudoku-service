@@ -22,7 +22,7 @@ import static org.jahiduls.sudokuservice.utilities.PuzzleIteratorUtils.xyToRowIn
  *
  * Each cell of the puzzle can either be empty (value 0) or have the values [1-9].
  *
- * Each cell can be indexed by x and y, where 0 <= x <= 8 && 0 <= y <= 8; x and y represent the axes.
+ * Each cell can be indexed by xi and yi, where 0 <= i <= 8; x and y represent the axes, with the top-left being (0, 0).
  * bi represents the i-th block.
  *
  *    x0 x1 x2 x3 x4 x5 x6 x7 x8
@@ -46,11 +46,9 @@ public class Puzzle {
     public Puzzle() {
 
         matrix = new Cell[puzzleSize()][puzzleSize()];
-        for (int i = 0; i < puzzleSize(); i++) {
-            for (int j = 0; j < puzzleSize(); j++) {
-                matrix[i][j] = Cell.BLANK;
-            }
-        }
+        IntStream.range(0, puzzleSize())
+                .forEach(i -> IntStream.range(0, puzzleSize())
+                        .forEach(j -> matrix[i][j] = Cell.BLANK));
 
         rows = IntStream.range(0, puzzleSize())
                 .mapToObj(i -> new Sequence())
@@ -66,15 +64,13 @@ public class Puzzle {
     }
 
     public static Puzzle from(Puzzle puzzle) {
-        Puzzle copyPuzzle = new Puzzle();
+        
+        final Puzzle puzzleCopy = new Puzzle();
+        IntStream.range(0, puzzleSize())
+                .forEach(i -> IntStream.range(0, puzzleSize())
+                .forEach(j -> puzzleCopy.setCellAt(i, j, puzzle.getCellAt(i, j))));
 
-        for (int i = 0; i < puzzleSize(); i++) {
-            for (int j = 0; j < puzzleSize(); j++) {
-                copyPuzzle.setCellAt(i, j, puzzle.getCellAt(i, j));
-            }
-        }
-
-        return copyPuzzle;
+        return puzzleCopy;
     }
 
     public Cell getCellAt(int x, int y) {
@@ -85,16 +81,16 @@ public class Puzzle {
 
         matrix[x][y] = cell;
 
-        int rowIndex = xyToRowIndex(x, y);
-        int rowCellIndex = xyToRowCellIndex(x, y);
+        final int rowIndex = xyToRowIndex(x, y);
+        final int rowCellIndex = xyToRowCellIndex(x, y);
         rows.get(rowIndex).setCellAt(rowCellIndex, cell);
 
-        int columnIndex = xyToColumnIndex(x, y);
-        int columnCellIndex = xyToColumnCellIndex(x, y);
+        final int columnIndex = xyToColumnIndex(x, y);
+        final int columnCellIndex = xyToColumnCellIndex(x, y);
         columns.get(columnIndex).setCellAt(columnCellIndex, cell);
 
-        int blockIndex = xyToBlockIndex(x, y);
-        int blockCellIndex = xyToBlockCellIndex(x, y);
+        final int blockIndex = xyToBlockIndex(x, y);
+        final int blockCellIndex = xyToBlockCellIndex(x, y);
         blocks.get(blockIndex).setCellAt(blockCellIndex, cell);
 
     }
@@ -112,42 +108,42 @@ public class Puzzle {
     }
 
     public Set<Integer> getAllValuesInRow(int x, int y) {
-        int rowIndex = xyToRowIndex(x, y);
+        final int rowIndex = xyToRowIndex(x, y);
         Sequence row = rows.get(rowIndex);
 
         return row.getAllValues();
     }
 
     public Set<Integer> getCandidateValuesInRow(int x, int y) {
-        int rowIndex = xyToRowIndex(x, y);
+        final int rowIndex = xyToRowIndex(x, y);
         Sequence row = rows.get(rowIndex);
 
         return row.getCandidateValues();
     }
 
     public Set<Integer> getAllValuesInColumn(int x, int y) {
-        int columnIndex = xyToColumnIndex(x, y);
+        final int columnIndex = xyToColumnIndex(x, y);
         Sequence column = columns.get(columnIndex);
 
         return column.getAllValues();
     }
 
     public Set<Integer> getCandidateValuesInColumn(int x, int y) {
-        int columnIndex = xyToColumnIndex(x, y);
+        final int columnIndex = xyToColumnIndex(x, y);
         Sequence column = columns.get(columnIndex);
 
         return column.getCandidateValues();
     }
 
     public Set<Integer> getAllValuesInBlock(int x, int y) {
-        int blockIndex = xyToBlockIndex(x, y);
+        final int blockIndex = xyToBlockIndex(x, y);
         Block block = blocks.get(blockIndex);
 
         return block.getAllValues();
     }
 
     public Set<Integer> getCandidateValuesInBlock(int x, int y) {
-        int blockIndex = xyToBlockIndex(x, y);
+        final int blockIndex = xyToBlockIndex(x, y);
         Block block = blocks.get(blockIndex);
 
         return block.getCandidateValues();
@@ -156,36 +152,48 @@ public class Puzzle {
     @Override
     public String toString() {
 
-        final String blockRowSeparator = "-------------------------";
-        final String blockColumnSeparator = "|";
-
+        final String blockSeparator = "-------------------------";
+        final String rowSeparator = "\n";
         final StringBuilder sb = new StringBuilder();
 
-        sb.append(blockRowSeparator).append("\n");
-
-        for (int y = 0; y < puzzleSize(); y++) {
-
-            if (y > 0 && y % puzzleBlockSize() == 0) {
-                sb.append(blockRowSeparator).append("\n");
-            }
-
-            sb.append(blockColumnSeparator).append(" ");
-
-            for (int x = 0; x < puzzleSize(); x++) {
-
-                if (x > 0 && x % puzzleBlockSize() == 0) {
-                    sb.append(blockColumnSeparator).append(" ");
-                }
-
-                sb.append(matrix[x][y].getValue()).append(" ");
-            }
-
-            sb.append(blockColumnSeparator);
-            sb.append("\n");
-        }
-
-        sb.append(blockRowSeparator).append("\n");
+        IntStream.range(0, puzzleSize())
+                .forEach(y -> {
+                    if (isBlockBoundary(y)) {
+                        sb.append(blockSeparator).append(rowSeparator);
+                    }
+                    sb.append(rowToString(y)).append(rowSeparator);
+                });
+        sb.append(blockSeparator).append(rowSeparator);
 
         return sb.toString();
+    }
+
+    /**
+     * Converts a puzzle row into a pretty string representation.
+     *
+     * @param y The row number
+     *
+     * @return A pretty string representation of the row
+     */
+    private String rowToString(int y) {
+
+        final String blockSeparator = "|";
+        final String columnSeparator = " ";
+        final StringBuilder sb = new StringBuilder();
+
+        IntStream.range(0, puzzleSize())
+                .forEach(x -> {
+                    if (isBlockBoundary(x)) {
+                        sb.append(blockSeparator).append(columnSeparator);
+                    }
+                    sb.append(matrix[x][y].getValue()).append(columnSeparator);
+                });
+        sb.append(blockSeparator);
+
+        return sb.toString();
+    }
+
+    private boolean isBlockBoundary(int n) {
+        return n % puzzleBlockSize() == 0;
     }
 }

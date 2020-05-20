@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.function.Predicate.not;
 import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.maxSequenceIndex;
 import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.minSequenceIndex;
 import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.puzzleSize;
@@ -35,11 +36,12 @@ public class Sequence {
      * Helper copy constructor. Package private.
      */
     Sequence(List<Cell> cells) {
+
         if (cells.size() != puzzleSize()) {
             throw new RuntimeException("Sequence expects exactly " + puzzleSize() + " cells; got: " + cells.size());
         }
 
-        this.cells = cells;
+        this.cells = List.copyOf(cells);
     }
 
     /**
@@ -56,10 +58,11 @@ public class Sequence {
     }
 
     /**
-     * Returns the Cell at the specified index.
+     * Returns the {@link Cell} at the specified index.
      *
      * @param idx The index to fetch the {@link Cell} at.
-     * @return
+     *
+     * @return The {@link Cell} at the queried index
      */
     public Cell getCellAt(int idx) {
 
@@ -83,26 +86,32 @@ public class Sequence {
         /*
          * If any value other than 0 occurs more than once, the row is invalid
          */
-        for (Map.Entry<Integer, Long> entry : groupings.entrySet()) {
-            if (entry.getValue() > 1 && entry.getKey() != 0) {
-                return false;
-            }
-        }
-
-        return true;
+        return groupings.entrySet().stream()
+                .reduce(true, (result, entry) -> result && (entry.getKey() == 0 || entry.getValue() == 1), (a, b) -> a && b);
 
     }
 
+    /**
+     * Returns the set of all unique values in this sequence.
+     *
+     * @return A set of values.
+     */
     public Set<Integer> getAllValues() {
         return cells.stream().map(Cell::getValue).collect(Collectors.toSet());
     }
 
+    /**
+     * Returns a set of unique values that can be used as candidates in this sequence.
+     *
+     * @return A set of values.
+     */
     public Set<Integer> getCandidateValues() {
+
         final Set<Integer> existingValues = getAllValues();
 
         return IntStream.range(1, 10)
                 .boxed()
-                .filter(i -> !existingValues.contains(i))
+                .filter(not(existingValues::contains))
                 .collect(Collectors.toSet());
     }
 

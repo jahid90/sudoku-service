@@ -1,15 +1,15 @@
 package org.jahiduls.sudokuservice.dao;
 
-import org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils;
-
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.function.Predicate.not;
 import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.maxBlockIndex;
 import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.minBlockIndex;
 import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.puzzleBlockSize;
+import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.puzzleSize;
 
 /**
  * A block is `BLOCK_SIZE` x `BLOCK_SIZE` in dimension.
@@ -25,7 +25,7 @@ public class Block {
     private final List<Cell> cells;
 
     public Block() {
-        cells = IntStream.range(0, PuzzleDimensionUtils.puzzleSize())
+        cells = IntStream.range(0, puzzleSize())
                 .mapToObj(i -> Cell.BLANK)
                 .collect(Collectors.toList());
     }
@@ -65,7 +65,8 @@ public class Block {
      *          false, otherwise
      */
     public boolean isValid() {
-        Sequence row = new Sequence(this.cells);
+
+        final Sequence row = new Sequence(this.cells);
 
         return row.isValid();
     }
@@ -80,7 +81,7 @@ public class Block {
 
         return IntStream.range(1, 10)
                 .boxed()
-                .filter(i -> !existingValues.contains(i))
+                .filter(not(existingValues::contains))
                 .collect(Collectors.toSet());
     }
 
@@ -89,13 +90,15 @@ public class Block {
 
         final StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < puzzleBlockSize(); i++) {
-            for (int j = 0; j < puzzleBlockSize(); j++) {
-                int linearIdx = puzzleBlockSize() * i + j;
-                sb.append(getCellAt(linearIdx)).append(" ");
-            }
-            sb.append("\n");
-        }
+        IntStream.range(0, puzzleBlockSize())
+                .forEach(i -> {
+                    IntStream.range(0, puzzleBlockSize())
+                            .forEach(j -> {
+                                final int linearIdx = puzzleBlockSize() * i + j;
+                                sb.append(getCellAt(linearIdx)).append(" ");
+                    });
+                    sb.append("\n");
+        });
 
         return sb.toString();
     }

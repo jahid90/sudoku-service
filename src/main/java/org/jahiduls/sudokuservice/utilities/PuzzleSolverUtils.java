@@ -33,6 +33,7 @@ public final class PuzzleSolverUtils {
             throw new RuntimeException("Cell is not blank. Not a valid candidate.");
         }
 
+        // Result is the intersection of three sets; candidates in block, row and column
         final Set<Integer> candidates = puzzle.getCandidateValuesInBlock(x, y);
         candidates.retainAll(puzzle.getCandidateValuesInRow(x, y));
         candidates.retainAll(puzzle.getCandidateValuesInColumn(x, y));

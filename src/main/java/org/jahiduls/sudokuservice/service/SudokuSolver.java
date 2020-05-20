@@ -14,7 +14,7 @@ public class SudokuSolver {
     private final SolverStrategy strategy;
 
     public Puzzle solve(Puzzle puzzle) throws InvalidPuzzleException {
-        PuzzleSolution solution = strategy.solve(puzzle);
+        final PuzzleSolution solution = strategy.solve(puzzle);
 
         return solution.getPuzzle();
     }

@@ -27,12 +27,14 @@ public class InvalidPuzzleException extends Exception {
         private Throwable throwable;
 
         public InvalidFormatExceptionBuilder withMessage(String message) {
+
             this.message = message;
 
             return this;
         }
 
         public InvalidFormatExceptionBuilder withThrowable(Throwable throwable) {
+
             this.throwable = throwable;
 
             return this;

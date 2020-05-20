@@ -1,10 +1,14 @@
 package org.jahiduls.sudokuservice.resource;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.jahiduls.sudokuservice.dao.Puzzle;
+
+import java.util.stream.IntStream;
 
 import static org.jahiduls.sudokuservice.utilities.PuzzleDimensionUtils.puzzleSize;
 
+@ToString
 public class PuzzleResource {
 
     @Getter
@@ -14,13 +18,11 @@ public class PuzzleResource {
 
         StringBuilder sb = new StringBuilder();
 
-        for (int y = 0; y < puzzleSize(); y++) {
-            for (int x = 0; x < puzzleSize(); x++) {
-                sb.append(puzzle.getCellAt(x, y).getValue());
-            }
-        }
+        IntStream.range(0, puzzleSize())
+                .forEach(y -> IntStream.range(0, puzzleSize())
+                .forEach(x -> sb.append(puzzle.getCellAt(x, y).getValue())));
 
-        PuzzleResource result = new PuzzleResource();
+        final PuzzleResource result = new PuzzleResource();
         result.puzzle = sb.toString();
 
         return result;
@@ -32,5 +34,4 @@ public class PuzzleResource {
 
         return result;
     }
-
 }

@@ -26,7 +26,7 @@ public class SudokuController {
         log.info("Received: {}", puzzle);
 
         try {
-            Puzzle solution = service.solve(puzzle);
+            final Puzzle solution = service.solve(puzzle);
             return PuzzleResource.fromPuzzle(solution);
         } catch (InvalidFormatException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());

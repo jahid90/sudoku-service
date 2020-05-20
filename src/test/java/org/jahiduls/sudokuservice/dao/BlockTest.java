@@ -124,7 +124,10 @@ public class BlockTest {
         block.setCellAt(7, Cell.THREE);
         block.setCellAt(8, Cell.SEVEN);
 
-        final String expected = "0 2 0 \n0 0 4 \n9 3 7 \n";
+        final String expected =
+                "0 2 0 \n" +
+                "0 0 4 \n" +
+                "9 3 7 \n";
 
         Assert.assertEquals(expected, block.toString());
     }
