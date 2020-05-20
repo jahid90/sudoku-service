@@ -3,7 +3,7 @@ package org.jahiduls.sudokuservice.service.strategy;
 import lombok.extern.log4j.Log4j2;
 import org.jahiduls.sudokuservice.dao.Cell;
 import org.jahiduls.sudokuservice.dao.Puzzle;
-import org.jahiduls.sudokuservice.exceptions.InvalidPuzzleException;
+import org.jahiduls.sudokuservice.exceptions.UnsolvablePuzzleException;
 
 import java.util.Set;
 
@@ -16,7 +16,7 @@ import static org.jahiduls.sudokuservice.utilities.PuzzleSolverUtils.isSolved;
 public class BruteForceStrategy implements SolverStrategy {
 
     @Override
-    public PuzzleSolution solve(Puzzle puzzle) throws InvalidPuzzleException {
+    public PuzzleSolution solve(Puzzle puzzle) throws UnsolvablePuzzleException {
 
         final PuzzleSolution solution = solveFromPosition(puzzle, 0, 0);
 
@@ -28,7 +28,7 @@ public class BruteForceStrategy implements SolverStrategy {
 
         log.info("Puzzle could not be solved!");
 
-        throw InvalidPuzzleException.newException().withMessage("Puzzle can not be solved").build();
+        throw UnsolvablePuzzleException.newException().withMessage("Puzzle can not be solved").build();
     }
 
     private PuzzleSolution solveFromPosition(Puzzle puzzle, int x, int y) {
@@ -72,6 +72,8 @@ public class BruteForceStrategy implements SolverStrategy {
             // Attempt solution from the next position
             int nextX = (x + 1) % puzzleSize();
             int nextY = y + ((x + 1) / puzzleSize());
+
+            // TODO - handle Y out of bounds
 
             final PuzzleSolution solution = solveFromPosition(puzzle, nextX, nextY);
             if (solution.isSolved()) {

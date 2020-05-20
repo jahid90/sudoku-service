@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.jahiduls.sudokuservice.dao.Puzzle;
 import org.jahiduls.sudokuservice.exceptions.InvalidFormatException;
 import org.jahiduls.sudokuservice.exceptions.InvalidPuzzleException;
+import org.jahiduls.sudokuservice.exceptions.UnsolvablePuzzleException;
 import org.jahiduls.sudokuservice.resource.PuzzleResource;
 import org.jahiduls.sudokuservice.service.SudokuService;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,10 @@ public class SudokuController {
         try {
             final Puzzle solution = service.solve(puzzle);
             return PuzzleResource.fromPuzzle(solution);
-        } catch (InvalidFormatException e) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
-        } catch (InvalidPuzzleException e) {
+        } catch (InvalidFormatException | InvalidPuzzleException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (UnsolvablePuzzleException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
         }
     }
 

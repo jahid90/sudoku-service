@@ -1,4 +1,4 @@
-package org.jahiduls.sudokuservice.config;
+package org.jahiduls.sudokuservice;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
