@@ -50,14 +50,14 @@ public class SudokuControllerTest {
     }
 
     @Test
-    public void callToSolveRespondsWithUnprocessableEntityStatusOnInvalidFormatException() throws Exception {
+    public void callToSolveRespondsWithBadRequestStatusOnInvalidFormatException() throws Exception {
 
         final InvalidFormatException exception = mock(InvalidFormatException.class);
         Mockito.when(service.solve(puzzleResource)).thenThrow(exception);
         Mockito.when(exception.getMessage()).thenReturn("Bad format");
 
         expected.expect(ResponseStatusException.class);
-        expected.expectMessage("422 UNPROCESSABLE_ENTITY \"Bad format\"");
+        expected.expectMessage("400 BAD_REQUEST \"Bad format\"");
 
         controller.solve(puzzleResource);
     }
