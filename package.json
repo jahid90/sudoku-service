@@ -1,0 +1,12 @@
+{
+    "license": "MIT",
+    "scripts": {
+        "test": "./mvnw test",
+        "start": "./mvnw spring-boot:run",
+        "build": "./mvnw package",
+        "docker:build": "docker build -t sudoku-service:local .",
+        "docker:start": "docker-compose up -d",
+        "docker:stop": "docker-compose down",
+        "clean": "./mvnw clean"
+    }
+}
