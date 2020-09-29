@@ -1,18 +1,6 @@
-# Build env
-FROM openjdk:14-alpine as build
+FROM openjdk:11-jre
 
-WORKDIR /usr/app
+COPY ./target/*.jar /usr/lib/app.jar
 
-COPY . .
-RUN ./mvnw package spring-boot:repackage
+CMD ["java", "-jar", "/usr/lib/app.jar"]
 
-# Production env
-FROM openjdk:14-alpine
-
-COPY --from=build /usr/app/target/*.jar /usr/lib/app.jar
-RUN ln -s `which java` /usr/bin/java
-
-ENTRYPOINT ["/usr/bin/java"]
-CMD ["-jar", "/usr/lib/app.jar"]
-
-EXPOSE 8080
