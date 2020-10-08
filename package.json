@@ -4,9 +4,12 @@
         "test": "./mvnw test",
         "start": "./mvnw spring-boot:run",
         "build": "./mvnw package",
-        "docker:build": "docker build -t sudoku-service:local .",
+        "test:integration": "curl -X POST -H 'Content-Type: application/json' -d '@src/test/data/puzzle.json' localhost:8080/solve",
+        "clean": "./mvnw clean",
+        "docker:build": "docker build -t sudoku.service:local .",
         "docker:start": "docker-compose up -d",
         "docker:stop": "docker-compose down",
-        "clean": "./mvnw clean"
+        "k8s:start": "kubectl apply -f k8s/deployment.yaml",
+        "k8s:stop": "kubectl delete -f k8s/deployment.yaml"
     }
 }
