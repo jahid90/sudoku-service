@@ -1,6 +1,6 @@
 {
-    "license": "MIT",
-    "scripts": {
+    "version": "1",
+    "commands": {
         "test": "./mvnw test",
         "start": "./mvnw spring-boot:run",
         "build": "./mvnw package",
