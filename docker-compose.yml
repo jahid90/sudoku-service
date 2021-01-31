@@ -1,14 +1,12 @@
 version: '3'
-
 networks:
   default:
     external:
       name: home_network
-
 services:
   sudoku-service:
     build: .
-    image: sudoku-service:local
+    image: 'sudoku-service:local'
     container_name: sudoku-service
     restart: unless-stopped
     expose:
