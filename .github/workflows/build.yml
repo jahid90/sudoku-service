@@ -20,7 +20,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.14
-    - name: Build
-      run: ./gradlew build
-    - name: test
+      - name: Run Tests
       run: ./gradlew test
+    - name: Run Build
+      run: ./gradlew build

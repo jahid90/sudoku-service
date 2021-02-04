@@ -45,3 +45,9 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

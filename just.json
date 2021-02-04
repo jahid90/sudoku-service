@@ -1,7 +1,7 @@
 {
     "version": "1",
     "commands": {
-        "test": "./gradlew test",
+        "test": "./gradlew test --rerun-tasks",
         "start": "./gradlew bootRun",
         "build": "./gradlew bootJar",
         "docker:integration": "curl -X POST -H Content-Type:application/json -d @src/test/data/puzzle.json http://api.jahiduls.local/sudoku/solve",
