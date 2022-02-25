@@ -34,8 +34,8 @@ dependencies {
     }
     testImplementation 'junit:junit:4.13.2'
 
-    compileOnly 'org.projectlombok:lombok:1.18.20'
-    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
 
 group = 'org.jahiduls'
