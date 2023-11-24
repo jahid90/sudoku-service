@@ -29,7 +29,7 @@ dependencies {
 
     runtimeOnly 'org.apache.logging.log4j:log4j:[2.13.2,)'
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test:2.7.17') {
+    testImplementation('org.springframework.boot:spring-boot-starter-test:2.7.18') {
         exclude module: 'spring-boot-starter-logging'
     }
     testImplementation 'junit:junit:4.13.2'
